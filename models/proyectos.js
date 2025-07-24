@@ -27,3 +27,5 @@ const proyectoSchema = new schema({
         maxLength: 500
     },
 })
+
+module.exports = mongoose.model("Proyectos", proyectoSchema);
