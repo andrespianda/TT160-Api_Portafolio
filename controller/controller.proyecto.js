@@ -43,6 +43,9 @@ exports.modificarProyecto = async (req, res) => {
         const {id} = req.params;
         const proyecto = req.body;
         const proyectoCambiado = await ProyectosModel.findByIdAndUpdate(id, proyecto, {new: true});
+        if (!proyectoCambiado) {
+            return res.status(404).json({message: "Proyecto no encontrado"});
+        }
         return res.status(200).json({message: "Proyecto modificado exitosamente",proyecto});
     } catch (error) {
         return res.status(500).send(error);
@@ -51,8 +54,11 @@ exports.modificarProyecto = async (req, res) => {
 exports.eliminarProyecto = async (req, res) => {
     try {
         const {id} = req.params;
-        //const proyectoEliminado =
-         await ProyectosModel.findByIdAndDelete(id, {new: true});
+        const proyectoEliminado =await ProyectosModel.findByIdAndDelete(id, {new: true});
+        if (!proyectoEliminado) {
+            return res.status(404).json({message: "Proyecto no encontrado"});
+        }
+
         return res.status(200).json({message: "Proyecto Eliminado exitosamente"});
     } catch (error) {
         return res.status(500).send(error);
